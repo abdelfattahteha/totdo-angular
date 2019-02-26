@@ -1,0 +1,65 @@
+
+
+<div class="form-group" style="margin-bottom:30px;margin-top:20px;">
+    <form (ngSubmit)="enterNewItem()">
+      <input 
+    [formControl]="newItem"
+    placeholder="Enter new item to your Todo List"
+    type="text" class="form-control col-8 float-left">
+
+    <button [disabled]="newItem?.invalid"
+    type="submit" class="btn btn-primary col-3 float-right">Add To List</button>
+    </form>
+    <div class="clearfix"></div>
+
+</div>
+
+
+
+<p *ngIf="user?.todoLists.length === 0">
+  Your todo-list is empty, create one
+</p>
+
+<div *ngFor="let list of user?.todoLists, let i = index;" class="row">
+
+  <ng-template [ngIf]="editedItemIndex !== i">
+    <div class="col-9">
+      <div class="alert alert-secondary" role="alert">
+          {{ list.title }}
+      </div>
+    </div>
+  
+    <div class="form-group col-3">
+        <button class="btn btn-secondary dropdown-toggle"
+        mat-icon-button [matMenuTriggerFor]="appMenu">
+          options
+        </button>
+  
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item (click)="enableEdittion(list._id)"
+            >Edit</button>
+            <button (click)="removeFromList(list._id)" mat-menu-item>Delete</button>
+        </mat-menu>
+    </div>
+  </ng-template>
+
+  <ng-template [ngIf]="editedItemIndex == i">
+    
+    <form class="col-12" (ngSubmit)="editItem(i)">
+      <div class="form-group col-6 float-left">
+        <input [formControl]="editedItem" type="text" class="form-control">
+      </div>
+      <div class="col-6 float-left">
+        <button [disabled]="editedItem.invalid"
+        class="btn btn-primary" type="submit" style="margin-right:10px;">edit</button>
+        <button class="btn btn-light" (click)="editedItemIndex = -1">Cancel</button>
+      </div>
+    </form>
+  </ng-template>
+  
+  
+  
+  
+</div>
+
+

@@ -1,0 +1,56 @@
+
+<h3 style="margin-bottom:40px;">Signup</h3>
+
+<form [formGroup]="form" #ngForm="ngForm" (ngSubmit)="signupUser()" class="col-md-8 col-12">
+   
+    <div class="form-group">
+      <input formControlName="name"
+      type="text" class="form-control" placeholder="Username">
+      <div *ngIf="form.get('name').invalid && form.get('name').touched || 
+        ngForm.submitted && form.get('name').invalid">
+            <div class="invalid" *ngIf="form.get('name').errors.required">Username is Required</div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <input formControlName="email"
+         type="text" class="form-control" placeholder="Email">
+         <div *ngIf="form.get('email').invalid && form.get('email').touched || 
+         ngForm.submitted && form.get('email').invalid">
+             <div class="invalid" *ngIf="form.get('email').errors.required">Email is Required</div>
+             <div class="invalid" *ngIf="form.get('email').errors.email">Email not valid</div>
+             <div class="invalid" *ngIf="form.get('email').errors.emailExist">Email Already Exist</div>
+         </div>
+    </div>
+
+    <div class="form-group">
+        <input formControlName="password" 
+        type="password" class="form-control" placeholder="Password">
+        <div *ngIf="form.get('password').invalid && form.get('password').touched || 
+         ngForm.submitted && form.get('password').invalid">
+             <div class="invalid" *ngIf="form.get('password').errors.required">password is Required</div>
+             <div class="invalid" *ngIf="form.get('password').errors.minlength">password should be at least 6 length</div>
+         </div>
+    </div>
+
+    <div class="form-group">
+        <input formControlName="confirmPassword"
+        type="password" class="form-control" placeholder="Confoirm Password">
+
+        <div *ngIf="form.get('confirmPassword').invalid && form.get('confirmPassword').touched || 
+         ngForm.submitted && form.get('confirmPassword').invalid">
+             <div class="invalid" *ngIf="form.get('confirmPassword').errors.required">Confirm Password is Required</div>
+         </div>
+
+        <div *ngIf="form.errors?.matchPassword && (form.get('confirmPassword').touched || ngForm.submitted) 
+        && form.get('password').valid && form.get('confirmPassword').valid">
+             <div class="invalid" *ngIf="form.errors?.matchPassword">passwords done't match</div>
+         </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" style="width:20%">
+      signup
+    </button>
+
+
+</form>
